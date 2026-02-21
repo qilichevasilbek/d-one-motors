@@ -1,5 +1,5 @@
 services:
-  web:
+  d-one-motors:
     build: .
     container_name: d-one-motors
     ports:
