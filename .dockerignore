@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+.env*
+.vscode
+.idea
+.DS_Store
+certbot
+deploy.sh
+nginx-init.conf
