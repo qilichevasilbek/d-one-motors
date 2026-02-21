@@ -439,7 +439,7 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
       <section ref={heroRef} className="relative hero-fixed min-h-[500px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video autoPlay muted loop playsInline webkit-playsinline="true"
-            poster="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=800"
+            poster="/cars/mercedes-e300-amg-line/01.jpg"
             className="absolute inset-0 w-full h-full object-cover opacity-50">
             <source src="/videos/mercedes-hero.mp4" type="video/mp4" />
           </video>
@@ -694,7 +694,7 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
       {/* ===== CINEMATIC VIDEO BREAK ===== */}
       <section className="relative h-[40vh] min-h-[250px] md:h-[70vh] md:min-h-[400px] overflow-hidden">
         <video autoPlay muted loop playsInline webkit-playsinline="true"
-          poster="https://images.unsplash.com/photo-1606016159991-df404e460d5b?auto=format&fit=crop&q=80&w=800"
+          poster="/cars/range-rover-p530-caraway/01.jpg"
           className="absolute inset-0 w-full h-full object-cover">
           <source src="/videos/range-rover.mp4" type="video/mp4" />
         </video>
