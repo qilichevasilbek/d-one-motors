@@ -173,9 +173,9 @@ const CarCard = ({ car, size = "normal" }) => {
   const isLarge = size === "large";
   return (
     <Link to={`/catalog/${car.id}`} className="group block no-underline text-white">
-      <div className={`relative ${isLarge ? 'aspect-[4/3]' : 'aspect-[4/3]'} overflow-hidden bg-zinc-900 mb-3 md:mb-4`}>
+      <div className={`relative ${isLarge ? 'aspect-[4/3]' : 'aspect-[4/3]'} overflow-hidden bg-zinc-900 rounded-xl mb-3 md:mb-4`}>
         <div className="absolute top-3 left-3 z-10 flex gap-2">
-          <span className="bg-white/10 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase tracking-widest border border-white/20">
+          <span className="bg-white/10 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase tracking-widest rounded-full">
             {car.tag}
           </span>
         </div>
@@ -198,11 +198,11 @@ const CarCard = ({ car, size = "normal" }) => {
           <h4 className="text-zinc-400 text-xs tracking-widest uppercase mb-0.5 truncate">{car.brand}</h4>
           <h3 className={`${isLarge ? 'text-lg md:text-xl' : 'text-base md:text-lg'} font-light tracking-tight font-serif truncate`}>{car.model}</h3>
           <div className="flex flex-wrap gap-1.5 mt-1.5">
-            <span className="text-[10px] tracking-wider text-zinc-500 border border-zinc-800 px-2 py-0.5">{car.year}</span>
-            <span className="text-[10px] tracking-wider text-zinc-500 border border-zinc-800 px-2 py-0.5">{car.power}</span>
+            <span className="text-[10px] tracking-wider text-zinc-500 bg-zinc-900/80 rounded-full px-2 py-0.5">{car.year}</span>
+            <span className="text-[10px] tracking-wider text-zinc-500 bg-zinc-900/80 rounded-full px-2 py-0.5">{car.power}</span>
           </div>
         </div>
-        <div className="w-8 h-8 md:w-9 md:h-9 rounded-full border border-zinc-800 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:rotate-45 transition-all duration-500 mt-1">
+        <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-zinc-900/60 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-black group-hover:rotate-45 transition-all duration-500 mt-1">
           <ArrowUpRight size={14} />
         </div>
       </div>
@@ -299,13 +299,13 @@ const Nav = ({ isScrolled, showMobileCTA }) => {
     ? [
         { label: 'Models', href: '#models' },
         { label: 'Catalog', to: '/catalog' },
-        { label: 'Philosophy', href: '#philosophy' },
         { label: 'Services', href: '#services' },
         { label: 'Contact', href: '#contact' },
       ]
     : [
         { label: 'Home', to: '/' },
         { label: 'Catalog', to: '/catalog' },
+        { label: 'Services', to: '/#services' },
         { label: 'Contact', to: '/#contact' },
       ];
 
@@ -398,7 +398,7 @@ const Nav = ({ isScrolled, showMobileCTA }) => {
 // HOME PAGE
 // ==========================================
 
-const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMobileCTA, cursorPos, scrollProgress }) => {
+const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMobileCTA, cursorPos, scrollProgress, onVideoReady }) => {
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -426,12 +426,13 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
 
   const featuredCars = inventory.filter(c => c.featured);
 
-  // Group cars by brand for sliders
-  const mercedesCars = inventory.filter(c => ['Mercedes-Benz', 'Mercedes-AMG', 'Mercedes-Maybach'].includes(c.brand));
-  const bmwCars = inventory.filter(c => c.brand === 'BMW' || c.brand === 'MINI');
-  const genesisCars = inventory.filter(c => c.brand === 'Genesis' || c.brand === 'Hyundai');
-  const exoticCars = inventory.filter(c => ['Porsche', 'Lamborghini'].includes(c.brand));
-  const otherCars = inventory.filter(c => ['Range Rover', 'Lexus'].includes(c.brand));
+  // Latest arrivals: top 8 highest-priced non-featured cars, mixed brands
+  const latestArrivals = useMemo(() => {
+    return inventory
+      .filter(c => !c.featured)
+      .sort((a, b) => b.price - a.price)
+      .slice(0, 8);
+  }, []);
 
   return (
     <>
@@ -440,6 +441,7 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
         <div className="absolute inset-0 z-0">
           <video autoPlay muted loop playsInline webkit-playsinline="true"
             poster="/cars/mercedes-e300-amg-line/01.jpg"
+            onLoadedData={onVideoReady}
             className="absolute inset-0 w-full h-full object-cover opacity-50">
             <source src="/videos/mercedes-hero.mp4" type="video/mp4" />
           </video>
@@ -579,19 +581,8 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
             ))}
           </div>
 
-          {/* ===== BROWSE BY BRAND ===== */}
-          <div className="mb-8">
-            <FadeIn>
-              <h3 className="text-zinc-500 text-xs tracking-[0.2em] uppercase mb-2">Browse by Brand</h3>
-              <div className="w-12 h-px bg-zinc-800 mb-10" />
-            </FadeIn>
-          </div>
-
-          <CategorySlider title="Mercedes-Benz" cars={mercedesCars} brandLabel />
-          <CategorySlider title="BMW & MINI" cars={bmwCars} brandLabel />
-          <CategorySlider title="Genesis & Hyundai" cars={genesisCars} brandLabel />
-          <CategorySlider title="Porsche & Lamborghini" cars={exoticCars} brandLabel />
-          <CategorySlider title="Range Rover & Lexus" cars={otherCars} brandLabel />
+          {/* ===== LATEST ARRIVALS ===== */}
+          <CategorySlider title="Latest Arrivals" cars={latestArrivals} brandLabel />
 
           {/* View Full Catalog CTA */}
           <FadeIn>
@@ -672,7 +663,7 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
               { icon: <FileText size={20} />, label: 'Accessible Parking' },
             ].map((feature, i) => (
               <FadeIn key={i} delay={i * 80}>
-                <div className="border border-zinc-800 p-3 md:p-6 flex flex-col items-center text-center gap-2 md:gap-3 hover:border-zinc-600 transition-colors duration-500 group">
+                <div className="bg-zinc-900/40 rounded-xl p-3 md:p-6 flex flex-col items-center text-center gap-2 md:gap-3 hover:bg-zinc-900/60 transition-colors duration-500 group">
                   <div className="text-zinc-500 group-hover:text-white transition-colors duration-500">{feature.icon}</div>
                   <span className="text-zinc-400 text-[9px] md:text-xs tracking-wider md:tracking-widest uppercase font-light leading-tight">{feature.label}</span>
                 </div>
@@ -725,7 +716,7 @@ const HomePage = ({ isScrolled, heroLoaded, introComplete, showBackToTop, showMo
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((t, i) => (
               <FadeIn key={i} delay={i * 150} className="group">
-                <div className="border border-zinc-800 p-6 md:p-8 h-full flex flex-col hover:border-zinc-600 transition-colors duration-500 relative">
+                <div className="bg-zinc-900/30 rounded-xl p-6 md:p-8 h-full flex flex-col hover:bg-zinc-900/50 transition-colors duration-500 relative">
                   <Quote size={20} className="text-zinc-700 mb-4 md:mb-6" />
                   <p className="text-zinc-300 font-light leading-relaxed text-sm md:text-base flex-1 italic">"{t.text}"</p>
                   <div className="mt-6 pt-6 border-t border-zinc-800">
@@ -845,10 +836,10 @@ const CatalogPage = () => {
               <div className="flex gap-2 min-w-max">
                 {allBrands.map(brand => (
                   <button key={brand} onClick={() => setSelectedBrand(brand)}
-                    className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-widest border transition-all duration-300 cursor-pointer whitespace-nowrap ${
+                    className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs uppercase tracking-widest rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap ${
                       selectedBrand === brand
-                        ? 'bg-white text-black border-white'
-                        : 'bg-transparent text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white'
+                        ? 'bg-white text-black'
+                        : 'bg-zinc-900/60 text-zinc-400 hover:bg-zinc-800/80 hover:text-white'
                     }`}>
                     {brand}
                   </button>
@@ -860,7 +851,7 @@ const CatalogPage = () => {
             <div className="flex items-center gap-2">
               <SlidersHorizontal size={14} className="text-zinc-500" />
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="bg-transparent border border-zinc-800 text-zinc-300 text-xs uppercase tracking-widest px-3 py-2 cursor-pointer focus:border-zinc-600 focus:outline-none appearance-none pr-8"
+                className="bg-zinc-900/60 border-none rounded-lg text-zinc-300 text-xs uppercase tracking-widest px-3 py-2 cursor-pointer focus:outline-none appearance-none pr-8"
                 style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}>
                 <option value="default">Default</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -874,7 +865,7 @@ const CatalogPage = () => {
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-5 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {filteredCars.map((car, index) => (
             <FadeIn key={car.id} delay={Math.min(index * 60, 600)} direction="up">
               <CarCard car={car} />
@@ -1004,7 +995,7 @@ const CarDetailPage = () => {
             {/* Highlight pills */}
             <div className="flex flex-wrap gap-2 mb-8">
               {car.highlights.map((h, i) => (
-                <span key={i} className="border border-zinc-700 px-3 py-1.5 text-[10px] md:text-[11px] tracking-wider uppercase text-zinc-300">{h}</span>
+                <span key={i} className="bg-zinc-900/60 rounded-full px-3 py-1.5 text-[10px] md:text-[11px] tracking-wider uppercase text-zinc-300">{h}</span>
               ))}
             </div>
 
@@ -1016,7 +1007,7 @@ const CarDetailPage = () => {
                 { icon: <Gauge size={15} />, label: 'Transmission', value: car.transmission },
                 { icon: <Car size={15} />, label: 'Drivetrain', value: car.drivetrain },
               ].map((spec, i) => (
-                <div key={i} className="border border-zinc-800 p-3 md:p-4">
+                <div key={i} className="bg-zinc-900/40 rounded-lg p-3 md:p-4">
                   <div className="flex items-center gap-2 text-zinc-500 mb-1.5">
                     {spec.icon}
                     <span className="text-[10px] tracking-widest uppercase">{spec.label}</span>
@@ -1193,28 +1184,56 @@ export default function App() {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
+  const [introFading, setIntroFading] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showMobileCTA, setShowMobileCTA] = useState(false);
+  const videoReady = useRef(false);
+  const minDelayPassed = useRef(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
 
-  // Intro splash
+  // Try to dismiss the intro splash (called when either condition is met)
+  const tryDismissIntro = useCallback(() => {
+    if (videoReady.current && minDelayPassed.current && !introFading) {
+      setIntroFading(true);
+      // After fade-out animation completes (700ms), remove splash
+      setTimeout(() => {
+        setIntroComplete(true);
+        setHeroLoaded(true);
+      }, 700);
+    }
+  }, [introFading]);
+
+  // Video loaded callback
+  const onVideoReady = useCallback(() => {
+    videoReady.current = true;
+    tryDismissIntro();
+  }, [tryDismissIntro]);
+
+  // Intro splash timing
   useEffect(() => {
     if (!isHome) {
       setIntroComplete(true);
       setHeroLoaded(true);
       return;
     }
-    const timer = setTimeout(() => setIntroComplete(true), 2500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!introComplete) return;
-    const timer = setTimeout(() => setHeroLoaded(true), 200);
-    return () => clearTimeout(timer);
-  }, [introComplete]);
+    // Minimum display time: 1.5s
+    const minTimer = setTimeout(() => {
+      minDelayPassed.current = true;
+      tryDismissIntro();
+    }, 1500);
+    // Safety timeout: 6s — force reveal if video never loads
+    const safetyTimer = setTimeout(() => {
+      videoReady.current = true;
+      minDelayPassed.current = true;
+      tryDismissIntro();
+    }, 6000);
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(safetyTimer);
+    };
+  }, [tryDismissIntro]);
 
   // Scroll handlers
   useEffect(() => {
@@ -1240,12 +1259,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
-      {/* Intro Splash - only on home */}
+      {/* Intro Splash - only on home, JS-controlled fade */}
       {isHome && !introComplete && (
-        <div className="intro-screen fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center">
+        <div className={`intro-screen fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center${introFading ? ' intro-fading' : ''}`}>
           <div className="intro-logo text-2xl md:text-4xl font-bold tracking-[0.3em] uppercase">D-ONE</div>
           <div className="intro-line w-12 h-px bg-white/60 mt-4 origin-center" />
           <div className="intro-logo text-[10px] md:text-xs tracking-[0.4em] uppercase text-zinc-500 mt-3">Motors</div>
+          <div className="intro-pulse w-1.5 h-1.5 rounded-full bg-white mt-8" />
         </div>
       )}
 
@@ -1268,7 +1288,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={
           <HomePage isScrolled={isScrolled} heroLoaded={heroLoaded} introComplete={introComplete}
-            showBackToTop={showBackToTop} showMobileCTA={showMobileCTA} cursorPos={cursorPos} scrollProgress={scrollProgress} />
+            showBackToTop={showBackToTop} showMobileCTA={showMobileCTA} cursorPos={cursorPos} scrollProgress={scrollProgress}
+            onVideoReady={onVideoReady} />
         } />
         <Route path="/catalog" element={<CatalogPage />} />
         <Route path="/catalog/:id" element={<CarDetailPage />} />

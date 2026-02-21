@@ -239,15 +239,26 @@ video {
   animation: lineGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Intro splash screen */
+/* Intro splash screen — fade controlled by JS (videoReady + min delay) */
 .intro-screen {
-  animation: introFade 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.intro-screen.intro-fading {
+  opacity: 0;
+  pointer-events: none;
 }
 .intro-logo {
   animation: introLogoScale 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .intro-line {
   animation: introLine 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes introPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+.intro-pulse {
+  animation: introPulse 1.5s ease-in-out infinite;
 }
 
 /* ===== Car Detail Modal ===== */
