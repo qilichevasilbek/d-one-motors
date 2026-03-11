@@ -78,10 +78,10 @@ Parking, Credit card payment, Bank transfer, Cash, Cafe, Free Wi-Fi, Preliminary
 ### IMPORTANT: Docker requires `sudo` on the server
 ```bash
 # Local (macOS — no sudo needed):
-docker compose up -d --build web
+docker compose up -d --build d-one-motors
 
 # Production server — MUST use sudo:
-sudo docker compose up -d --build web
+sudo docker compose up -d --build d-one-motors
 ```
 
 ### Branch: master (HEAD)
