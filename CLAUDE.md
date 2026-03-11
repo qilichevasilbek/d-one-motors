@@ -58,7 +58,7 @@ certbot/           — SSL cert volumes (conf/ and www/)
 - **Location**: Muqimiy Street, 7, Tashkent, Uzbekistan
 - **Phone**: +998 90 818 60 30
 - **Email**: info@d-one-motors.uz
-- **Telegram**: @donemotors
+- **Telegram**: @d_one_motors_admin
 - **Hours**: Open daily until 9:00 PM
 - **Est.**: 2020
 

@@ -343,7 +343,7 @@ const Nav = ({ isScrolled, showMobileCTA }) => {
           </div>
 
           <MagneticButton className="hidden md:block border border-zinc-700 px-6 py-2 text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 bg-transparent cursor-pointer">
-            <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer" className="no-underline text-inherit">Enquire</a>
+            <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer" className="no-underline text-inherit">Enquire</a>
           </MagneticButton>
 
           <button className="md:hidden text-white cursor-pointer bg-transparent border-none w-11 h-11 flex items-center justify-center -mr-2"
@@ -373,13 +373,13 @@ const Nav = ({ isScrolled, showMobileCTA }) => {
             )
           )}
           <div className="mt-10">
-            <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer"
+            <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer"
               className="block w-full border border-zinc-700 py-4 text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 text-white text-center no-underline">
               Enquire Now
             </a>
           </div>
           <div className="mt-6 flex gap-4">
-            <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer"
+            <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer"
               className="flex-1 border border-zinc-800 py-3 text-center text-sm uppercase tracking-widest text-zinc-400 hover:text-white transition-colors no-underline">
               Telegram
             </a>
@@ -1043,7 +1043,7 @@ const CarDetailPage = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-col gap-3 pb-8">
-              <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer"
+              <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer"
                 className="w-full bg-white text-black py-4 text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors text-center no-underline">
                 <MessageCircle size={15} /> Enquire via Telegram
               </a>
@@ -1110,7 +1110,7 @@ const Footer = () => (
             <ul className="space-y-3 md:space-y-4 font-light text-zinc-300 text-sm md:text-base list-none p-0 m-0">
               <li><Link to="/" className="group inline-flex items-center gap-2 hover:text-white transition-colors no-underline text-zinc-300">Home</Link></li>
               <li><Link to="/catalog" className="group inline-flex items-center gap-2 hover:text-white transition-colors no-underline text-zinc-300">Catalog</Link></li>
-              <li><a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 hover:text-white transition-colors no-underline text-zinc-300">Telegram <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all duration-300" /></a></li>
+              <li><a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 hover:text-white transition-colors no-underline text-zinc-300">Telegram <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all duration-300" /></a></li>
             </ul>
             <h4 className="text-zinc-500 text-xs md:text-sm tracking-widest uppercase mb-3 mt-8">Payment</h4>
             <div className="flex flex-wrap gap-2 text-[11px] md:text-xs text-zinc-400 font-light">
@@ -1149,7 +1149,7 @@ const FloatingUI = ({ showBackToTop, showMobileCTA }) => {
         <ChevronUp size={18} />
       </button>
 
-      <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer"
+      <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer"
         className={`fixed bottom-[72px] md:bottom-8 left-4 md:left-auto md:right-24 z-40 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#2AABEE] text-white flex items-center justify-center transition-all duration-500 shadow-lg shadow-black/30 hover:scale-110 no-underline ${
           showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
@@ -1165,7 +1165,7 @@ const FloatingUI = ({ showBackToTop, showMobileCTA }) => {
           <a href="tel:+998908186030" className="flex-1 flex items-center justify-center gap-1.5 border border-zinc-700 py-2.5 text-[11px] uppercase tracking-widest text-white no-underline">
             <Phone size={13} /> Call
           </a>
-          <a href="https://t.me/donemotors" target="_blank" rel="noopener noreferrer"
+          <a href="https://t.me/d_one_motors_admin" target="_blank" rel="noopener noreferrer"
             className="flex-[2] bg-white text-black py-2.5 text-[11px] uppercase tracking-widest font-medium no-underline flex items-center justify-center">
             Enquire Now
           </a>
